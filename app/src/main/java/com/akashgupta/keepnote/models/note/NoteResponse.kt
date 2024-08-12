@@ -1,4 +1,4 @@
-package com.importantconcept.notesapp.models.note
+package com.akashgupta.keepnote.models.note
 
 data class NoteResponse(
     val __v: Int,

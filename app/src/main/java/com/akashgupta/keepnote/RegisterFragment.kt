@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.akashgupta.keepnote.databinding.FragmentRegisterBinding
 import com.akashgupta.keepnote.utils.NetworkResult
+import com.akashgupta.keepnote.utils.TokenManager
 import com.importantconcept.notesapp.models.signup.UserRequest
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -23,12 +25,20 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!! //null safe
     private val authViewModel by viewModels<AuthViewModel>() //kotlin extension - its calling viewmodelprovider
 
+    @Inject
+    lateinit var tokenManager: TokenManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+        if (tokenManager.getToken() != null){
+            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+        }
+
         return binding.root
     }
 
@@ -70,7 +80,7 @@ class RegisterFragment : Fragment() {
             binding.progressBar.isVisible = false
             when(it){
                 is NetworkResult.Success -> {
-                    //token
+                    tokenManager.saveToken(it.data!!.token)
                     findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
                 }
                 is NetworkResult.Error -> {
