@@ -1,7 +1,7 @@
 
-# Yet Another Notes App
+# Notes App
 
-This is a simple note taking app in Android with Integrated API. In this project we have covered everything that is required to create a fully functional app.
+This is a simple note taking app in Android with Integrated API. In this project i have covered everything that is required to create a fully functional app.
 
 
 
